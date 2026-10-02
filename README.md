@@ -1,5 +1,9 @@
 # mmwcas-stream
 
+![live range-azimuth map of a hand sweeping left to right](docs/demo_hand.gif)
+
+Live RA map, 20 ms frames, hand at ~1 m, uncalibrated array (replay of a recording through the viewer).
+
 Live streaming of raw ADC frames from the TI cascade radar (MMWCAS-RF-EVM, 4 x AWR2243, on the MMWCAS-DSP-EVM capture
 board) to a Windows PC, with a live range-azimuth / range-Doppler map. TI's own flow records to the board's SSD and
 copies files afterwards; this tool reads the growing capture files on the board while the radar runs and pushes every
@@ -33,7 +37,11 @@ on the board itself (writer stalls), none on the PC; 30-minute runs and repeated
 - [USAGE.md](USAGE.md): per-boot steps, commands, map keys, the rules that bite.
 - [ARCHITECTURE.md](ARCHITECTURE.md): data flow, file layout, frame format, where latency and loss come from.
 - [KNOWN_ISSUES.md](KNOWN_ISSUES.md): what goes wrong and what to do.
-- [THIRD_PARTY.md](THIRD_PARTY.md): what is derived from TI code; [LICENSE](LICENSE): to be decided.
+- [THIRD_PARTY.md](THIRD_PARTY.md): what is derived from TI code and stays under TI's terms.
+
+## License
+
+BSD-3-Clause, copyright 2026 Jinhyeok Park, Georgia Institute of Technology ([LICENSE](LICENSE)); TI-derived parts as in THIRD_PARTY.md.
 
 ## Layout
 

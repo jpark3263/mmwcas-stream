@@ -12,3 +12,5 @@ __pycache__/
 .pytest_cache/
 # screenshots
 *.png
+# Claude Code project settings
+.claude/
