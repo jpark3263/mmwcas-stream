@@ -14,6 +14,7 @@ RECARG=""; [ -n "$RECORD" ] && RECARG="--record-capture $RECORD"
 FLIPARG=""; [ "${FLIP:-0}" = 1 ] && FLIPARG="--flip-azimuth"
 BGARG="--background"; [ "${BG:-1}" = 0 ] && BGARG=""
 VARGS="--loops $LOOPS --period-ms $IFI --eta 30 --arrival-log logs/arrivals.csv $RECARG $FLIPARG $BGARG"
+"$PY" -c "import numpy, pyqtgraph, PyQt5" 2>/dev/null || { echo "!! '$PY' cannot import numpy/pyqtgraph/PyQt5: set pc.python in config.toml to the interpreter where requirements.txt is installed"; exit 2; }
 if [ "${DRY:-0}" = 1 ]; then
   echo "DRY=1: would start the viewer: \"$PY\" tools/live_maps.py $VARGS"
   echo "       then the capture: LOOPS=$LOOPS PERIOD_MS=$IFI sh tools/run_capture.sh $DUR $RECORD"
@@ -76,4 +77,13 @@ if [ "$n" -lt 4 ]; then
 fi
 if [ "$n" -ge 4 ]; then echo "== stream ended: framing verified stopped on 4 devices, recording stopped"; else echo "!! STOP NOT VERIFIED ($n of 4): check Studio, do not start a new stream"; fi
 grep -E "^!!" logs/stream_runner.txt | head -3
+FRAMES=$(( $(wc -l < logs/arrivals.csv 2>/dev/null || echo 1) - 1 ))
+DIR=$(cat logs/last_capture_dir.txt 2>/dev/null)
+if [ "$FRAMES" -le 0 ] && grep -q "^>>> STREAMING" logs/stream_runner.txt; then
+  if ls "logs/runs/$DIR/"*_idx.bin > /dev/null 2>&1; then
+    echo "!! the TDA captured frames but none reached the viewer: see logs/viewer_$TS.txt and logs/runs/$DIR/followers.txt, then sh tools/stream.sh again"
+  else
+    echo "!! BAD BOOT: the TDA wrote no frames (no idx files, viewer received 0). Power-cycle the board with Studio open, wait 3 min, sh tools/connect.sh, sh tools/stream.sh (KNOWN_ISSUES.md)"
+  fi
+fi
 echo "   viewer still open (pid $VPID): close its window or sh tools/stop_stream.sh --close-viewer"

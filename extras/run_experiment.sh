@@ -95,7 +95,6 @@ for d in master slave1 slave2 slave3; do
   sh tools/tda2_scp.sh "tda2:/tmp/follow_$d.log" "$RUN/" 2>/dev/null
   sh tools/tda2_scp.sh "tda2:$SSD/$DIR/${d}_*_idx.bin" "$RUN/" 2>/dev/null
 done
-sh tools/tda2_ssh.sh "ls -l $SSD/$DIR/; df -h $SSD" > "$RUN/ssd_listing.txt" 2>&1
 python tools/capture_stats.py "$DIR" "$IFI" | tee "$RUN/stats.txt"
 python extras/analyze_run.py "$RUN" --loops "$LOOPS" --period-ms "$IFI" | tee "$RUN/analysis.txt"
 python extras/irq_delta.py "$RUN" | tee -a "$RUN/analysis.txt"

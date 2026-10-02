@@ -39,7 +39,7 @@ def main():
         runs = sorted(glob.glob(os.path.join(cfg.ROOT, "logs", "runs", "*")))
         run_dir = runs[-1] if runs else None
     if not run_dir or not glob.glob(os.path.join(run_dir, "master_*_idx.bin")):
-        print("no idx files in %s" % run_dir)
+        print("no frames captured in %s (no idx files): bad boot? see KNOWN_ISSUES.md" % (os.path.basename(run_dir) if run_dir else "logs/runs/"))
         return
     period = float(sys.argv[2]) / 1e3 if len(sys.argv) > 2 else cfg.get("capture.period_ms") / 1e3
     print("run %s (period %.0f ms)" % (os.path.basename(run_dir), period * 1e3))

@@ -34,6 +34,8 @@
 
 ## First run
 
+Set `pc.python` in `config.toml` first: the full path of the interpreter where `requirements.txt` is installed
+(connect.sh and stream.sh refuse to start if it cannot import pyqtgraph). Then:
 ```
 cd mmwcas-stream
 python -m pytest tests                    # all pass without hardware (the MATLAB parity test skips)

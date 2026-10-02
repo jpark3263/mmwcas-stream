@@ -6,6 +6,8 @@ cd "$ROOT" || exit 1
 WD=$(pwd -W 2>/dev/null || pwd)
 C() { python tools/cfg.py "$1"; }
 LOOPS=${LOOPS:-$(C capture.loops)}; IFI=${PERIOD_MS:-$(C capture.period_ms)}
+PY=$(C pc.python)
+"$PY" -c "import numpy, pyqtgraph, PyQt5" 2>/dev/null || { echo "!! '$PY' cannot import numpy/pyqtgraph/PyQt5: set pc.python in config.toml to the interpreter where requirements.txt is installed"; exit 2; }
 mkdir -p logs lua/generated
 python tools/make_config.py --loops "$LOOPS" --period-ms "$IFI" > /dev/null || exit 2
 CFG="$WD/lua/generated/Cascade_Configuration_MIMO.lua"
