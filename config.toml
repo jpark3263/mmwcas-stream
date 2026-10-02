@@ -1,0 +1,28 @@
+# mmwcas-stream configuration. Every machine-specific value lives here; the defaults are the TI reference setup.
+
+[pc]
+ip = "192.168.33.30"            # static address of the PC's Ethernet port on the radar link
+python = "python"               # interpreter with requirements.txt installed (used for the viewer and the tools)
+ports = [5001, 5002, 5003, 5004] # TCP ports the PC listens on: master, slave1, slave2, slave3
+bind = "0.0.0.0"                # address the listeners bind to (all interfaces)
+
+[tda]
+ip = "192.168.33.180"           # MMWCAS-DSP-EVM (TDA2) address; ssh as root, no password
+ssd = "/mnt/ssd"                # capture file system on the board
+free_gb_min = 20                # refuse to start a capture below this much free space
+
+[studio]
+dir = "C:/ti/mmwave_studio_03_00_00_14"                                 # mmWave Studio 3.0.0.14 install
+host = "127.0.0.1"                                                      # its Lua command server
+port = 2777
+meta_image = "C:/ti/mmwave_dfp_02_02_04_00/firmware/xwr22xx_metaImage.bin"  # DFP 2.2.4 firmware for the AWR2243 ES1.1
+
+[capture]
+samples = 256                   # ADC samples per chirp (fixed by the Lua profile)
+chirps = 12                     # chirps per loop = one per TX
+loops = 1                       # chirp loops per frame (frame bytes scale with it)
+period_ms = 20                  # frame period; 20 ms is the verified streaming point, 10 ms is unsupported
+
+[follower]
+nice = 0                        # priority of the board-side followers (19 starves at 20 ms)
+poll_s = 0.005                  # slot polling interval on the board

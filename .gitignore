@@ -1,0 +1,14 @@
+# run outputs
+logs/
+captures/
+lua/generated/
+# board-specific calibration and reference data (validation/ is produced by extras/run_ti_parity.m)
+calib.npz
+calib.png
+validation/
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+# screenshots
+*.png

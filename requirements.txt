@@ -1,0 +1,6 @@
+numpy>=1.24
+pyqtgraph>=0.13
+PyQt5>=5.15
+matplotlib>=3.7
+h5py>=3.8
+pytest>=7
